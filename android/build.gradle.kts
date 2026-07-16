@@ -22,12 +22,3 @@ subprojects {
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
-subprojects {
-    afterEvaluate {
-        if (project.name == "speech_to_text") {
-            android {
-                compileSdk = 34
-            }
-        }
-    }
-}
