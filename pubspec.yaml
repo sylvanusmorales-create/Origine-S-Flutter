@@ -12,7 +12,7 @@ dependencies:
   http: ^1.2.2
   web_socket_channel: ^3.0.1
   shared_preferences: ^2.3.2
-  speech_to_text: ^7.4.0
+  # speech_to_text: ^7.4.0
   flutter_markdown: ^0.7.3
 
 dev_dependencies:
