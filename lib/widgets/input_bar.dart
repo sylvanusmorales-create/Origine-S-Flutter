@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:speech_to_text/speech_to_text.dart';
 
 class InputBar extends StatefulWidget {
   final bool isStreaming;
@@ -19,38 +18,6 @@ class InputBar extends StatefulWidget {
 
 class _InputBarState extends State<InputBar> {
   final TextEditingController _ctrl = TextEditingController();
-  final SpeechToText _speech = SpeechToText();
-  bool _listening = false;
-  bool _speechAvailable = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _speech.initialize().then((v) {
-      if (mounted) setState(() => _speechAvailable = v);
-    });
-  }
-
-  void _toggleVoice() async {
-    if (_listening) {
-      await _speech.stop();
-      if (mounted) setState(() => _listening = false);
-      return;
-    }
-    if (!_speechAvailable) return;
-    setState(() => _listening = true);
-    await _speech.listen(
-      onResult: (result) {
-        if (result.finalResult) {
-          setState(() {
-            _ctrl.text = result.recognizedWords;
-            _listening = false;
-          });
-        }
-      },
-      localeId: 'fr_FR',
-    );
-  }
 
   void _send() {
     final text = _ctrl.text.trim();
@@ -62,7 +29,6 @@ class _InputBarState extends State<InputBar> {
   @override
   void dispose() {
     _ctrl.dispose();
-    _speech.stop();
     super.dispose();
   }
 
@@ -77,14 +43,6 @@ class _InputBarState extends State<InputBar> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          _Btn(
-            icon: _listening ? Icons.mic : Icons.mic_none,
-            color: _listening
-                ? const Color(0xFFC04040)
-                : const Color(0xFF555555),
-            onTap: _toggleVoice,
-          ),
-          const SizedBox(width: 8),
           Expanded(
             child: Container(
               constraints: const BoxConstraints(maxHeight: 160),
