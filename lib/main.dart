@@ -43,7 +43,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
         onPageStarted: (_) => setState(() => _isLoading = true),
         onPageFinished: (_) => setState(() => _isLoading = false),
       ))
-      ..loadRequest(Uri.parse('https://origine-s-production.up.railway.app'));
+      ..loadRequest(Uri.parse('https://origine-s.onrender.com'));
   }
 
   @override
